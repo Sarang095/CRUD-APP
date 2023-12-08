@@ -1,5 +1,7 @@
-use axum::http;
-use axum::routing:: {get, post, Router};
+mod handlers;
+use axum::routing::{delete, get, post, put, Router};
+use sqlx::postgres::PgPoolOptions;
+use std::env;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -7,7 +9,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let addr = format!("0.0.0.0:{}", port);
 
     let app = Router::new()
-        .route("/", get(handlers::health));
+        .route("/", get(handlers::health))
         .route("/quotes", post(handlers::create_quote));
 
     axum::Server::bind(&addr.parse().unwrap())
