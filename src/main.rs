@@ -1,5 +1,5 @@
 use axum::http;
-use axum::routing:: {get, Router};
+use axum::routing:: {get, post, Router};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -7,16 +7,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let addr = format!("0.0.0.0:{}", port);
 
     let app = Router::new()
-        .route("/", get(health));
+        .route("/", get(handlers::health));
         .route("/quotes", post(handlers::create_quote));
 
     axum::Server::bind(&addr.parse().unwrap())
         .serve(app.into_make_service())
         .await
         .unwrap();
+
     Ok(())  // Fixed the typo here
 }
-
-async fn health() -> http::StatusCode { 
-    http::StatusCode::OK
 
