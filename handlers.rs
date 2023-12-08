@@ -28,7 +28,7 @@ impl Quote {
 pub struct CreateQuote {
     book: String,
     quote: String,
-}
+} 
 
 pub async fn health() -> http::StatusCode {
     http::StatusCode::OK
@@ -59,3 +59,4 @@ pub async fn create_quote(
         Err(_) => Err(http::StatusCode::INTERNAL_SERVER_ERROR),
     }
 }
+
